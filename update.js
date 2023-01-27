@@ -21,7 +21,7 @@ function createColumnName() {
 		now.getMonth() + '-' +
 	  now.getDate() + '-' +
 		now.getHours() + '-' + 
-		now.getMinutes();
+		now.getMinutes()
 	);
 }
 
