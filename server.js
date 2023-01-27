@@ -4,10 +4,10 @@ const path = require('path');
 const knex = require('knex')({
   client: 'pg',
   connection: {
-    host : '127.0.0.1',
+    host : 'dpg-cf9uvvarrk01l41mmnk0-a',
     port : 5432,
-    user : 'postgres',
-    password : 'France98',
+    user : 'jlucke',
+    password : 'dIrzm6iSReSRYWjtFrYaOYRK12fUfUYf',
     database : 'usmnt'
   }
 });
