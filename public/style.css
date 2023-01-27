@@ -1,0 +1,29 @@
+body {
+  background-image: url("usmnt_logo.jpg");
+}
+
+h1 {
+}
+
+li {
+  font-size: 30px;
+}
+
+#top-ten {
+  height: 500px;
+  width:600px;
+  border: 1px solid black;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 20px;
+}
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
