@@ -3,10 +3,10 @@ const client = new TwitterApi('AAAAAAAAAAAAAAAAAAAAAMFclQEAAAAAvDjanDNrB4307fft9
 const usmnt = require('knex')({
   client: 'pg',
   connection: {
-    host : '127.0.0.1',
+    host : 'dpg-cf9uvvarrk01l41mmnk0-a',
     port : 5432,
-    user : 'postgres',
-    password : 'France98',
+    user : 'jlucke',
+    password : 'dIrzm6iSReSRYWjtFrYaOYRK12fUfUYf',
     database : 'usmnt'
   },
   useNullAsDefault: true
@@ -20,7 +20,8 @@ function createColumnName() {
 		now.getFullYear() + '-' + 
 		now.getMonth() + '-' +
 	  now.getDate() + '-' +
-		now.getHours()
+		now.getHours() + '-' + 
+		now.getMinutes();
 	);
 }
 
@@ -52,18 +53,9 @@ function getTwitterUpdate() {
 
 //----------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------
 
-function showTimeLine(data) {
-	counts = Object.values(data[0]);
-	times = Object.keys(data[0]);
-	console.log(counts);
-	console.log(times);
-}
-
-// -----------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------
-
-//usmnt.select('*').from('testing').where({id: 5}).then(showTimeLine);
 getTwitterUpdate();
 
 
