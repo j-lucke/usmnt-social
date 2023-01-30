@@ -57,6 +57,6 @@ function getTwitterUpdate() {
 // ---------------------------------------------------------------------------------
 
 getTwitterUpdate();
-
+setTimeout(() => {usmnt.destroy()}, 10000);
 
 
