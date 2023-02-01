@@ -1,62 +1,67 @@
+//require('dotenv').config();
 const { TwitterApi } = require('twitter-api-v2');
-const client = new TwitterApi('AAAAAAAAAAAAAAAAAAAAAMFclQEAAAAAvDjanDNrB4307fft9tC%2FtkD38Uo%3DCgmGJ9M6tGyBXc1TcUMeamrnFNdjnMEGCVKyFlzHfVKmljo3wO');
-const usmnt = require('knex')({
+const client = new TwitterApi(process.env.TWITTER_KEY);
+
+const usmnt = require('knex') ({
   client: 'pg',
-  connection: {
-    host : 'dpg-cf9uvvarrk01l41mmnk0-a',
-    port : 5432,
-    user : 'jlucke',
-    password : 'dIrzm6iSReSRYWjtFrYaOYRK12fUfUYf',
-    database : 'usmnt'
-  },
-  useNullAsDefault: true
+  connection: process.env.DB_CONFIG
 });
 
-let column_name = '';
-
 function createColumnName() {
-	const now = new Date();
-	return (
-		now.getFullYear() + '-' + 
-		now.getMonth() + '-' +
-	  now.getDate() + '-' +
-		now.getHours() + '-' + 
-		now.getMinutes()
-	);
+  const now = new Date();
+  return (
+    now.getFullYear() + '-' + 
+    now.getMonth() + '-' +
+    now.getDate() + '-' +
+    now.getHours() + '-' + 
+    now.getMinutes()
+  );
 }
 
-function updateRecords(players){
-	players.forEach( player => {
-		if (player.twitter_name != null) {
-			const str = 'users/by/username/' + player.twitter_name + '?user.fields=public_metrics';
-			client.v2.get(str).then( twitter_user => {
-				usmnt('twitter_followers')
-					.where({id: player.id})
-					.update(column_name, twitter_user.data.public_metrics.followers_count)
-					.then();
-				usmnt('twitter_followers')
-					.where({id: player.id})
-					.update({current_count: twitter_user.data.public_metrics.followers_count})
-					.then();
-			});
-		}
-	});
+let COLUMN_NAME = createColumnName();
+
+async function createNewColumn() {
+  await usmnt.schema.table('twitter_followers', (table) => {
+    table.integer(COLUMN_NAME);
+  });
 }
 
-function getTwitterUpdate() {
-	column_name = createColumnName();
-	usmnt.schema.table('twitter_followers', (table) => {
-		table.integer(column_name);
-	}).then();
-	usmnt.select('*').from('twitter_followers').then(updateRecords);
+async function updateRecord(twitterUser){
+  const p = usmnt('twitter_followers')
+    .where({twitter_name: twitterUser.data.username})
+    .update({current_count: twitterUser.data.public_metrics.followers_count})
+    .then();
+  await p;
+  const q = usmnt('twitter_followers')
+    .where({twitter_name: twitterUser.data.username})
+    .update(COLUMN_NAME, twitterUser.data.public_metrics.followers_count)
+    .then();
+  await q;
 }
 
-//----------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------
+async function main(){
+  await createNewColumn();
+  usmnt.select('*')
+  .from('players')
+  .then( (data) => {
+    let names = [];
+    data.forEach( x => {
+      if (x.twitter_name != null) 
+        names.push('users/by/username/' + x.twitter_name + '?user.fields=public_metrics' )
+      else
+        names.push( null ); 
+    });
+    return names
+  })
+  .then( x => {
+    let p = [];
+    x.forEach( s => { 
+      if (s != null) 
+        p.push(client.v2.get(s).then(updateRecord)) 
+    });
+    return Promise.all(p);
+  })
+  .then( () => usmnt.destroy() );
+}
 
-getTwitterUpdate();
-setTimeout(() => {usmnt.destroy()}, 10000);
-
-
+main();
