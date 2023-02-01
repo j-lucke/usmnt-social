@@ -3,13 +3,7 @@ const path = require('path');
 
 const knex = require('knex')({
   client: 'pg',
-  connection: {
-    host : 'dpg-cf9uvvarrk01l41mmnk0-a',
-    port : 5432,
-    user : 'jlucke',
-    password : 'dIrzm6iSReSRYWjtFrYaOYRK12fUfUYf',
-    database : 'usmnt'
-  }
+  connection: process.env.DB_CONFIG 
 });
 
 const app = express();
@@ -21,7 +15,7 @@ app.get('/topten', (req, res) => {
     .from('twitter_followers')
     .whereNotNull('twitter_name')
     .orderBy('current_count', 'desc')
-    .limit(10)
+    .limit(8)
     .then( (data) => {
       res.send(JSON.stringify(data));
       console.log('request for top ten');
