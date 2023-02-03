@@ -19,6 +19,7 @@ li {
   background-color: white;
   padding: 20px;
   align-content: center;
+  overflow-y: auto;
 }
 
 .centered {
@@ -28,3 +29,13 @@ li {
   transform: translate(-50%, -50%);
 }
 
+#drop-down-container {
+  background-color: white;
+  width: 100px;
+  height: 300px;
+  overflow-y: auto;
+}
+
+#drop-down-list {
+  display: none;
+}

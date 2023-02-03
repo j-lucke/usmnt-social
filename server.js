@@ -8,11 +8,18 @@ const knex = require('knex')({
 });
 
 
-// I better not see this in master
-
 const app = express();
 
 app.use(express.static('public'));
+
+app.get('/master', (req, res) => {
+  console.log('request for master');
+  knex.select('*')
+    .from('players')
+    .then( (data) => {
+      res.send(JSON.stringify(data));
+    });
+});
 
 app.get('/topten', (req, res) => {
   knex.select('first_name', 'last_name', 'current_count')
@@ -26,4 +33,4 @@ app.get('/topten', (req, res) => {
     });
 });
 
-app.listen(3000);
+app.listen(3000, () => {console.log('listening on 3000...')} );
