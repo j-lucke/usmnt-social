@@ -7,6 +7,8 @@ const knex = require('knex')({
   connection: process.env.DB_CONFIG 
 });
 
+
+
 const app = express();
 
 app.use(express.static('public'));
