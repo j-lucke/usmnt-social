@@ -1,4 +1,4 @@
-//require('dotenv').config();
+require('dotenv').config();
 const { TwitterApi } = require('twitter-api-v2');
 const client = new TwitterApi(process.env.TWITTER_KEY);
 
@@ -27,6 +27,8 @@ async function createNewColumn() {
 }
 
 async function updateRecord(twitterUser){
+  if (!twitterUser) return
+  else console.log(twitterUser.data.username);
   const p = usmnt('twitter_followers')
     .where({twitter_name: twitterUser.data.username})
     .update({current_count: twitterUser.data.public_metrics.followers_count})
@@ -43,6 +45,7 @@ async function main(){
   await createNewColumn();
   usmnt.select('*')
   .from('players')
+  .where('id', '<', 5)
   .then( (data) => {
     let names = [];
     data.forEach( x => {
@@ -57,7 +60,7 @@ async function main(){
     let p = [];
     x.forEach( s => { 
       if (s != null) 
-        p.push(client.v2.get(s).then(updateRecord)) 
+        p.push(client.v2.get(s).then(updateRecord, (x) => {console.log(x)})) 
     });
     return Promise.all(p);
   })

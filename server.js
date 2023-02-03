@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 
@@ -15,7 +16,7 @@ app.get('/topten', (req, res) => {
     .from('twitter_followers')
     .whereNotNull('twitter_name')
     .orderBy('current_count', 'desc')
-    .limit(8)
+    .limit(70)
     .then( (data) => {
       res.send(JSON.stringify(data));
       console.log('request for top ten');

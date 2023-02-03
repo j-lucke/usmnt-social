@@ -2,7 +2,7 @@ const topTenList = document.createElement('ol');
 const listElements = [];
 const request = new XMLHttpRequest();
 
-for (i = 0; i < 8; i++) {
+for (i = 0; i < 70; i++) {
 	listElements.push(document.createElement('li'));
 	listElements[i].class = 'item';
 	topTenList.appendChild(listElements[i]);
