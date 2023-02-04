@@ -14,8 +14,8 @@ app.use(express.static('public'));
 
 app.get('/master', (req, res) => {
   console.log('request for master');
-  knex.select('*')
-    .from('players')
+  knex.select('first_name', 'last_name', 'current_count')
+    .from('twitter_followers')
     .then( (data) => {
       res.send(JSON.stringify(data));
     });

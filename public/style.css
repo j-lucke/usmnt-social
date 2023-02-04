@@ -2,24 +2,9 @@ body {
   background-image: url("usmnt_logo.jpg");
 }
 
-h1 {
-}
-
-li {
-  font-size: 10px;
-}
-
-#top-ten {
-  height: 500px;
-  width:600px;
-  border: 1px solid black;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  padding: 20px;
-  align-content: center;
-  overflow-y: auto;
+p {
+  padding: 5px;
+  text-align: center;
 }
 
 .centered {
@@ -29,13 +14,18 @@ li {
   transform: translate(-50%, -50%);
 }
 
-#drop-down-container {
+.player {
+  padding: 5px;
+  margin: 10px;
   background-color: white;
-  width: 100px;
-  height: 300px;
-  overflow-y: auto;
+  border: 1px solid black;
+  border-radius: 5px;
 }
 
-#drop-down-list {
-  display: none;
+#stage-list {
+  margin: 30px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: lightgray;
+  width: 300px;
 }
