@@ -1,4 +1,4 @@
-require('dotenv').config();
+//require('dotenv').config();
 const express = require('express');
 const path = require('path');
 
@@ -14,22 +14,21 @@ app.use(express.static('public'));
 
 app.get('/master', (req, res) => {
   console.log('request for master');
-  knex.select('first_name', 'last_name', 'current_count')
+  knex.select('id', 'first_name', 'last_name', 'current_count')
     .from('twitter_followers')
+    .orderBy('current_count', 'desc', 'last')
     .then( (data) => {
       res.send(JSON.stringify(data));
     });
 });
 
-app.get('/topten', (req, res) => {
-  knex.select('first_name', 'last_name', 'current_count')
+app.get('/id/:id', (req, res) => {
+  console.log(req.params);
+  knex.select('*')
     .from('twitter_followers')
-    .whereNotNull('twitter_name')
-    .orderBy('current_count', 'desc')
-    .limit(70)
-    .then( (data) => {
-      res.send(JSON.stringify(data));
-      console.log('request for top ten');
+    .where({id: req.params.id})
+    .then( (record) => {
+      res.send(JSON.stringify(record));
     });
 });
 
