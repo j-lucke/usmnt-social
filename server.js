@@ -1,4 +1,4 @@
-require('dotenv').config();
+//require('dotenv').config();
 const express = require('express');
 const path = require('path');
 
@@ -15,7 +15,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('/master', (req, res) => {
   knex.select('id', 'first_name', 'last_name', 'current_count')
