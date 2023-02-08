@@ -1,4 +1,4 @@
-//require('dotenv').config();
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 
@@ -10,10 +10,14 @@ const knex = require('knex')({
 
 const app = express();
 
-app.use(express.static('public'));
+app.use((req, res, next) => {
+  console.log(`aksin furr ${req.url}`)
+  next()
+})
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/master', (req, res) => {
-  console.log('request for master');
   knex.select('id', 'first_name', 'last_name', 'current_count')
     .from('twitter_followers')
     .orderBy('current_count', 'desc', 'last')
@@ -23,7 +27,6 @@ app.get('/master', (req, res) => {
 });
 
 app.get('/id/:id', (req, res) => {
-  console.log(req.params);
   knex.select('*')
     .from('twitter_followers')
     .where({id: req.params.id})

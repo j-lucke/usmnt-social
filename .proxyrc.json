@@ -1,0 +1,4 @@
+{
+  "/master": {"target": "http://localhost:3000/"},
+  "/id" : {"target": "http://localhost:3000/"}
+}

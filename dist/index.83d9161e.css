@@ -1,0 +1,39 @@
+body {
+  background-image: url("usmnt_logo.c464ec5c.jpg");
+}
+
+p {
+  text-align: center;
+  padding: 5px;
+}
+
+canvas {
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.player {
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px;
+}
+
+#stage-list {
+  width: 300px;
+  background-color: #d3d3d3;
+  border: 1px solid #000;
+  border-radius: 5px;
+  margin: 30px;
+}
+
+/*# sourceMappingURL=index.83d9161e.css.map */
