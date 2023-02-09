@@ -34,7 +34,7 @@ function daysSinceLaunch(d) {
 
 function dateFromLaunch(d) {
 // inverse of daysSinceLaunch
-	msecSinceLaunch = d*1000*60*60*24;
+	const msecSinceLaunch = d*1000*60*60*24;
 	const launch = new Date(2023, 0, 26, 23);
 	const day = new Date(launch.getTime() + msecSinceLaunch);	
 	return `${day.getMonth()+1}-${day.getDate()}`;
