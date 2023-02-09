@@ -58,7 +58,7 @@ function loadPlayer(player) {
 			'id', 'first_name', 'last_name',
 			'twitter_name', 'current_count'
 		];
-		data = [];
+		const data = [];
 		for (const property in row) {
 			if (!unNeededColumns.includes(property)) {
 				data.push({
@@ -67,7 +67,7 @@ function loadPlayer(player) {
 				});
 			}
 		}
-		player = {
+		const player = {
 			id: row.id,
 			first_name: row.first_name,
 			last_name: row.last_name,
